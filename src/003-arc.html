@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="200"
+      height="100"
+      style="border:1px solid #c3c3c3;"
+    >
+      您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+
+    <script>
+      // arc(x,y,r,start,stop)
+      // http://www.w3school.com.cn/tags/canvas_arc.asp
+
+      // begin path:
+      // https://segmentfault.com/a/1190000010330319
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      var deg = (2 * Math.PI) / 360;
+      ctx.beginPath();
+      ctx.arc(95, 50, 40, 0, 290 * deg);
+      ctx.stroke();
+    </script>
+  </body>
+</html>

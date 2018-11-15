@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="500"
+      height="500"
+      style="border:1px solid #c3c3c3;"
+    >
+      您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+    <script>
+      /*
+        在不修改代码的前提下，显示的样式是会出现红、蓝、黄、三条线
+        接下来我们注释第2个stroke()，发现第2根蓝线消失了，仅仅显示红线和黄线。stroke() 方法会实际地绘制出通过 moveTo() 和 lineTo() 方法定义的路径。默认颜色是黑色。
+        当我们把3个beginPath() 注释起来，神奇的事情就发生了：依次出现了橙、绿、黄三条线。情况貌似是在没有beginPath()的情况下，stroke会叠加执行，即：第一个stroke会画一条红线；第二个stroke会画两条蓝线，第三个stroke会画三条黄线，那么对应的上面橙色线条就是红蓝黄的叠加色，中间绿色就是红和蓝的叠加色，最后的黄色，就是黄色
+        
+        FEI总结一下：
+        清除点信息，防止出现多次绘制过程中的一些不可预料因素
+        */
+      var myCanvas = document.getElementById("myCanvas");
+      var context = myCanvas.getContext("2d");
+
+      context.fillStyle = "#000";
+      context.fillRect(0, 0, 500, 500);
+
+      context.beginPath();
+
+      context.moveTo(100, 100);
+      context.lineTo(200, 100);
+      context.strokeStyle = "red";
+      context.stroke();
+
+      context.beginPath();
+      context.moveTo(100, 200);
+      context.lineTo(200, 200);
+      context.strokeStyle = "blue";
+      context.stroke();
+
+      context.beginPath();
+      context.moveTo(100, 300);
+      context.lineTo(200, 300);
+      context.strokeStyle = "yellow";
+      context.stroke();
+    </script>
+  </body>
+</html>
