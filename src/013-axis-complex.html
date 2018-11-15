@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="http://www.softwhy.com/" />
+    <title>蚂蚁部落</title>
+    <style>
+        .canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 20%;
+  margin: auto;
+}
+.text {
+  width: 560px;
+  height: 50px;
+  border: 1px solid #000;
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  margin-left: -280px;
+  text-align: center;
+  line-height: 50px;
+}
+.btn {
+  cursor: pointer;
+}
+</style>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script>
+        // 绘制坐标轴
+        function drawBone() {
+            var c = document.getElementById("canvas");
+            var can = c.getContext("2d");
+
+            // 绘制X坐标轴
+            can.beginPath();
+            can.lineWidth = "2";
+            can.moveTo(50, 50);
+            can.lineTo(50, 350);
+            can.strokeStyle = "#000";
+            can.stroke();
+
+            // 绘制y坐标轴
+            can.beginPath();
+            can.lineWidth = "2";
+            can.moveTo(50, 350);
+            can.lineTo(650, 350);
+            can.strokeStyle = "#000";
+            can.stroke();
+
+            // 绘制x坐标轴刻度线
+            for (var i = 0; i < 12; i++) {
+                can.beginPath();
+                can.lineWidth = "1";
+                can.moveTo(70 + i * 50, 340);
+                can.lineTo(70 + i * 50, 350);
+                can.strokeStyle = "#000";
+                can.stroke();
+                // 绘制x坐标轴刻度值
+                can.font = "12px Arial";
+                can.fillStyle = "#000";
+                can.fillText(i, 66 + i * 50, 365);
+            }
+            can.font = "30px Arial";
+            can.fillText("x", 660, 365);
+
+
+            // 绘制y坐标轴刻度线
+            for (var i = 0; i < 5; i++) {
+                can.beginPath();
+                can.lineWidth = "2";
+                can.moveTo(50, 100 + i * 50);
+                can.lineTo(60, 100 + i * 50);
+                can.strokeStyle = "#000";
+                can.stroke();
+            }
+            // 绘制y坐标轴刻度值
+            for (var i = 0; i < 6; i++) {
+                can.font = "12px Arial";
+                can.fillStyle = "#000";
+                can.fillText(i * 50, 20, 350 - i * 50);
+            }
+            can.font = "20px Arial";
+            can.fillText("y", 20, 50);
+        }
+
+        // 绘制条形图
+        function drawPic(data, color) {
+            var c = document.getElementById("canvas");
+            var can = c.getContext("2d");
+
+            for (var i = 0; i < data.length; i++) {
+                can.fillStyle = color[i];
+                can.fillRect(70 + 2 * i * 50, 350 - data[i], 50, data[i]);
+
+                can.beginPath();
+                can.lineWidth = "0.5";
+                can.strokeStyle = color[i];
+                can.moveTo(50 + 70 + 2 * i * 50, 350 - data[i]);
+                can.lineTo(50, 350 - data[i])
+                can.stroke();
+
+
+                can.font = "12px Arial";
+                //设置字体填充颜色
+                can.fillStyle = color[i];
+                // can.fillText(string,x,y,maxWidth);
+                can.fillText(data[i], 88 + 2 * i * 50, 350 - data[i] - 5, 50);
+            }
+        }
+
+        // 初始化
+        function init() {
+            drawBone();
+            var data = new Array();
+            var color = new Array();
+
+            $("#btn").click(function () {
+                // 获取随机颜色
+                // 1、16777215为16进制的颜色ffffff转成10进制的数字
+                // 2、>>数字取整
+                // 3、转成16进制不足6位的以0来补充
+                if (data.length < 6) {
+                    var color_random = "#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6);
+                    color.push(color_random);
+                    var value = $("#val").val();
+                    if (value <= 300 && value >= 0) {
+                        data.push(value);
+                        drawPic(data, color);
+                        // console.log(data);
+                        // console.log(data.length);
+                        $("#val").val("");
+                    }
+                    else {
+                        alert("请输入0-300以内的数字");
+                        $("#val").val("");
+                    }
+                }
+                else {
+                    alert("最多输入6个数据");
+                }
+            });
+
+            // 回车事件
+            $("body").keydown(function () {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    $('#btn').click();
+                }
+            });
+        }
+        //页面加载时执行init()函数
+        window.onload = init;
+    </script>
+</head>
+
+<body>
+    <p>输入数值后按确定或者回车</p>
+    <p>
+        <canvas id="canvas" width="700" height="400" style="border:2px solid #0026ff;" class="canvas"></canvas>
+    </p>
+    <div class="text">
+        数值：<input type="text" id="val" class="val" placeholder="输入数值后按回车">
+        <div id="btn" class="btn">确定</div>
+    </div>
+</body>
+
+</html>
