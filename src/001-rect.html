@@ -33,13 +33,18 @@
       
       // methods: fillRect:
       TChart.prototype.fillRect = function(inOptions, inCallback) {
-        inCallback(this.context);
+        inCallback.call(this, this.context);
         this.context.fillRect(
           inOptions.x,
           inOptions.y,
           inOptions.width,
           inOptions.height
         );
+      };
+
+      // May be a property:
+      TChart.prototype.fillStyle = function(inStyle){
+        this.context.fillStyle = inStyle;
       };
 
       var tInstance = TChart.init(c);
@@ -53,8 +58,8 @@
           height: 75
         },
         function(context) {
-          // context.fillStyle = "#f00;";
-          context.fillStyle = "#0000ff";
+          console.log(this)
+          this.fillStyle("#0000ff");
         }
       );
     </script>
