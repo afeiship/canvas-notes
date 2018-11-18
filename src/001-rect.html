@@ -18,8 +18,45 @@
 
     <script>
       var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      ctx.fillRect(0, 0, 120, 75);
+      // var ctx = c.getContext("2d");
+      // ctx.fillRect(0, 0, 120, 75);
+
+      function TChart(inCanvas) {
+        this.canvas = inCanvas;
+        this.context = inCanvas.getContext("2d");
+      }
+
+      // init:
+      TChart.init = function(inCanvas){
+        return new TChart(inCanvas);
+      }
+      
+      // methods: fillRect:
+      TChart.prototype.fillRect = function(inOptions, inCallback) {
+        inCallback(this.context);
+        this.context.fillRect(
+          inOptions.x,
+          inOptions.y,
+          inOptions.width,
+          inOptions.height
+        );
+      };
+
+      var tInstance = TChart.init(c);
+
+      // elements:
+      tInstance.fillRect(
+        {
+          x: 0,
+          y: 0,
+          width: 120,
+          height: 75
+        },
+        function(context) {
+          // context.fillStyle = "#f00;";
+          context.fillStyle = "#0000ff";
+        }
+      );
     </script>
   </body>
 </html>
