@@ -35,3 +35,8 @@ CanvasRenderingContext2D.prototype.wrapText = function(text, x, y, maxWidth, lin
   }
   context.fillText(line, x, y);
 };
+
+
+
+// https://www.html.cn/demo/canvas_retina/index.html
+// https://www.zhangxinxu.com/study/201802/canvas-wrapText.html
