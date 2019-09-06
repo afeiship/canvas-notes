@@ -43,10 +43,13 @@
           }
         }
         fillText(temp, x, y, false);
+
+        console.log("line:", line);
+        console.log("height:", maxLine * lineHeight);
       }
 
       function fillText(text, x, y, wrap) {
-        console.log(line);
+        // console.log(line);
         if (line < maxLine) {
           ctx.fillText(text, x, y);
         }
