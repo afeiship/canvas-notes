@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Multiline Canvas Text with - ells</title>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="500"
+      height="500"
+      style="border:1px solid #000000;"
+    >
+      您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      var text = `道可道，非常道；名可名，非常名。
+无名，天地之始，有名，万物之母。
+故常无欲，以观其妙，常有欲妙，常有欲妙，常有欲`;
+      var textArr = text.split("");
+      var lineHeight = 40;
+      var limit = 500 - 20;
+      var x = 0;
+      var y = 40;
+      var temp = "";
+      var line = 1;
+      var maxLine = 3;
+      ctx.font = "30px Arial";
+
+      function writeText(text) {
+        for (let index = 0; index < textArr.length; index++) {
+          const item = textArr[index];
+          temp += item;
+          var mt = ctx.measureText(temp);
+          if (mt.width > limit) {
+            fillText(temp, x, y, true);
+            line++;
+            y = y + lineHeight;
+            temp = "";
+          }
+        }
+        fillText(temp, x, y, false);
+      }
+
+      function fillText(text, x, y, wrap) {
+        console.log(line);
+        if (line < maxLine) {
+          ctx.fillText(text, x, y);
+        }
+
+        if (line === maxLine) {
+          if (wrap) {
+            var arr = text.split("");
+            arr.splice(arr.length - 2, 2);
+            arr.push("...");
+            text = arr.join("");
+          }
+          ctx.fillText(text, x, y);
+        }
+      }
+
+      writeText(text);
+      //   ctx.fillText(text, 0, 30);
+    </script>
+  </body>
+</html>
